@@ -1,0 +1,113 @@
+﻿<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalAdd">
+    Add New Portfolio
+</button>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalAddCateg">
+    Add New Category
+</button>
+
+<!-- Modal -->
+<div class="modal fade slide-up disable-scroll" id="modalAdd" tabindex="-1" role="dialog" aria-hidden="false">
+    <div class="modal-dialog ">
+        <div class="modal-content-wrapper">
+            <div class="modal-content">
+                <div class="modal-header clearfix text-left">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <i class="pg-close fs-14"></i>
+                    </button>
+                    <h5>Add <span class="semi-bold">New Portfolio</span></h5>
+                </div>
+                <div class="modal-body">
+                    <form role="form">
+                        <div class="form-group">
+                            <label>Portfolio File</label>
+                            <input type="file" class="form-control form-group form-group-default" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Portfolio Name</label>
+                            <input type="text" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Portfolio Category</label>
+                            <select class="form-group form-group-default">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select>
+                        </div>
+                    </form>
+                    <div class="pull-right">
+                        <button type="button" class="btn btn-primary btn-block m-t-5">Create</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+</div>
+
+<div class="modal fade slide-up disable-scroll" id="modalAddCateg" tabindex="-1" role="dialog" aria-hidden="false">
+    <div class="modal-dialog ">
+        <div class="modal-content-wrapper">
+            <div class="modal-content">
+                <div class="modal-header clearfix text-left">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <i class="pg-close fs-14"></i>
+                    </button>
+                    <h5>Add <span class="semi-bold">New Category</span></h5>
+                </div>
+                <div class="modal-body">
+                    <form role="form">
+                        <div class="form-group">
+                            <label>Category Name</label>
+                            <input type="text" class="form-control" required>
+                        </div>
+                    </form>
+                    <div class="pull-right">
+                        <button type="button" class="btn btn-primary btn-block m-t-5">Create</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+</div>
+
+<div class="modal fade slide-up disable-scroll" id="modalEdit" tabindex="-1" role="dialog" aria-hidden="false">
+    <div class="modal-dialog ">
+        <div class="modal-content-wrapper">
+            <div class="modal-content">
+                <div class="modal-header clearfix text-left">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <i class="pg-close fs-14"></i>
+                    </button>
+                    <h5>Update <span class="semi-bold">Your Portfolio</span></h5>
+                </div>
+                <div class="modal-body">
+                    <form role="form">
+                        <div class="form-group">
+                            <label>Portfolio Name</label>
+                            <input type="text" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Portfolio Category</label>
+                            <select class="form-group form-group-default">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select>
+                        </div>
+                    </form>
+                    <div class="pull-right">
+                        <button type="button" class="btn btn-primary btn-block m-t-5">Update</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+</div>

@@ -1,0 +1,23 @@
+﻿<div class="row">
+
+    @for (int i = 1; i <= 10; i++)
+    {
+        <div class="col-lg-3">
+            <div id="card-linear-color" class="card card-default">
+                <div class="card-block">
+                    <h3>
+                        <span class="semi-bold">Skill Name</span>
+                    </h3>
+                    <h5>Skill Value %</h5>
+                    <div class="progress ">
+                        <div class="progress-bar progress-bar-success" style="width:100%"></div>
+                    </div>
+                    <div class="pull-right pt-3">
+                        <button class="btn btn-warning" data-toggle="modal" data-target="#modalEdit"><i class="fa fa-edit"></i></button>
+                        <button class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

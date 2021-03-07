@@ -1,0 +1,37 @@
+﻿@{
+    ViewData["Title"] = "Contact";
+    ViewData["ContactActive"] = "bg-success";
+}
+
+<!-- START BREADCRUMB -->
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/Home">Home</a></li>
+    <li class="breadcrumb-item active">Contact</li>
+</ol>
+<!-- END BREADCRUMB -->
+<!-- START card -->
+<div class="card">
+    <div class="card-block">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-transparent">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs nav-tabs-linetriangle" data-init-reponsive-tabs="dropdownfx">
+                        <li class="nav-item">
+                            <a href="#" class="active" data-toggle="tab" data-target="#fade1"><span>Contact Us</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" data-toggle="tab" data-target="#fade2"><span>Contact Social Media</span></a>
+                        </li>
+                    </ul>
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <partial name="Contact_Us" />
+                        <partial name="Contact_SocialMedia" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END card -->

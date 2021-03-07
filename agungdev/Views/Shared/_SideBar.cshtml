@@ -22,25 +22,25 @@
                 <a href="/Home" class="detailed">
                     <span class="title">Dashboard</span>
                 </a>
-                <span class="bg-success icon-thumbnail"><i class="pg-home"></i></span>
+                <span class="@ViewData["HomeActive"] icon-thumbnail"><i class="pg-home"></i></span>
             </li>
             <li class="">
                 <a href="/About" class="detailed">
                     <span class="title">About</span>
                 </a>
-                <span class="icon-thumbnail"><i class="fa fa-user"></i></span>
+                <span class="@ViewData["AboutActive"] icon-thumbnail"><i class="fa fa-user"></i></span>
             </li>
             <li class="">
                 <a href="/Skill"><span class="title">Skill</span></a>
-                <span class="icon-thumbnail"><i class="fa fa-line-chart"></i></span>
+                <span class="@ViewData["SkillActive"] icon-thumbnail"><i class="fa fa-line-chart"></i></span>
             </li>
             <li class="">
                 <a href="/Portfolio"><span class="title">Portfolio</span></a>
-                <span class="icon-thumbnail"><i class="fa fa-image"></i></span>
+                <span class="@ViewData["PortfolioActive"] icon-thumbnail"><i class="fa fa-image"></i></span>
             </li>
             <li class="">
-                <a href="#"><span class="title">Contact Us</span></a>
-                <span class="icon-thumbnail"><i class="fa fa-phone"></i></span>
+                <a href="/Contact"><span class="title">Contact Us</span></a>
+                <span class="@ViewData["ContactActive"] icon-thumbnail"><i class="fa fa-phone"></i></span>
             </li>
         </ul>
         <div class="clearfix"></div>

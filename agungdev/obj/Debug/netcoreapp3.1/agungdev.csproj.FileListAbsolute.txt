@@ -44,3 +44,6 @@ D:\Web\ASP.NET\agungdev\agungdev\obj\Debug\netcoreapp3.1\agungdev.csprojAssembly
 D:\Web\ASP.NET\agungdev\agungdev\obj\Debug\netcoreapp3.1\Razor\Views\Portfolio\Index.cshtml.g.cs
 D:\Web\ASP.NET\agungdev\agungdev\obj\Debug\netcoreapp3.1\Razor\Views\Portfolio\Portfolio_Add.cshtml.g.cs
 D:\Web\ASP.NET\agungdev\agungdev\obj\Debug\netcoreapp3.1\Razor\Views\Portfolio\Portfolio_Data.cshtml.g.cs
+D:\Web\ASP.NET\agungdev\agungdev\obj\Debug\netcoreapp3.1\Razor\Views\Contact\Contact_SocialMedia.cshtml.g.cs
+D:\Web\ASP.NET\agungdev\agungdev\obj\Debug\netcoreapp3.1\Razor\Views\Contact\Contact_Us.cshtml.g.cs
+D:\Web\ASP.NET\agungdev\agungdev\obj\Debug\netcoreapp3.1\Razor\Views\Contact\Index.cshtml.g.cs

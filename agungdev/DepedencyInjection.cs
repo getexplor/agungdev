@@ -12,6 +12,7 @@ namespace agungdev
         public static void AddServiceDepedency(this IServiceCollection services)
         {
             services.AddTransient<IAboutService, AboutService>();
+            services.AddTransient<ISkillService, SkillService>();
         }
     }
 }

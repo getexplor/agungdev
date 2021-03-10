@@ -10,7 +10,7 @@ namespace agungdev.Service
 {
     public class AboutService : IAboutService
     {
-        AgungDevContext _context = new AgungDevContext();
+        private readonly AgungDevContext _context = new AgungDevContext();
         IList<About> abt = null;
         public AboutService(AgungDevContext context)
         {
@@ -36,7 +36,7 @@ namespace agungdev.Service
             }
             catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
             
         }

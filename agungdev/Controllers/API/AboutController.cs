@@ -56,7 +56,7 @@ namespace agungdev.Controllers.API
         }
 
         [HttpPut]
-        public IActionResult put(About about)
+        public IActionResult Put(About about)
         {
             if (!ModelState.IsValid)
             {
@@ -75,7 +75,7 @@ namespace agungdev.Controllers.API
             }
             catch (Exception ex)
             {
-                return BadRequest();
+                return BadRequest(ex);
             }
         }
     }

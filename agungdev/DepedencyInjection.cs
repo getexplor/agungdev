@@ -13,6 +13,7 @@ namespace agungdev
         {
             services.AddTransient<IAboutService, AboutService>();
             services.AddTransient<ISkillService, SkillService>();
+            services.AddTransient<IContactService, ContactService>();
         }
     }
 }

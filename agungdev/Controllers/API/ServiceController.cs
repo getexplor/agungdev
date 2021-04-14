@@ -2,50 +2,46 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using agungdev.Models;
-using agungdev.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using agungdev.Models;
+using agungdev.Service;
+using Newtonsoft.Json;
 
 namespace agungdev.Controllers.API
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class SkillController : ControllerBase
+    public class ServiceController : ControllerBase
     {
-        private readonly ISkillService _skillService;
 
-        public SkillController(ISkillService skillService)
+        private readonly IServicesService _servicesService;
+
+        public ServiceController(IServicesService servicesService)
         {
-            this._skillService = skillService;
+            _servicesService = servicesService;
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult GetService()
         {
             try
             {
-                var data = _skillService.GetSkill();
-
-                if (data == null)
-                {
-                    return NotFound();
-                }
-
+                var data = _servicesService.GetServices();
                 return Ok(data);
             }
             catch (Exception ex)
             {
                 return BadRequest(ex);
             }
+            
         }
-
         [HttpGet("{id:int}")]
         public IActionResult GetById(int id)
         {
             try
             {
-                var data = _skillService.GetById(id);
+                var data = _servicesService.GetById(id);
 
                 if (data == null)
                 {
@@ -59,66 +55,61 @@ namespace agungdev.Controllers.API
                 return BadRequest(ex);
             }
         }
-
         [HttpPost]
-        public IActionResult Post(SkillViewModel skillVM)
+        public IActionResult Post(ServiceViewModel serviceVM)
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest("Invalid Data");
+                return BadRequest("Data Not Valid");
             }
 
             try
             {
-                if (skillVM == null)
+                if (serviceVM == null)
                 {
                     return BadRequest("Data cannot null");
                 }
-
-                var data = _skillService.AddSkill(skillVM);
-
+                var data = _servicesService.AddService(serviceVM);
                 return Ok(data);
             }
             catch (Exception ex)
             {
                 return BadRequest(ex);
             }
-        }
 
+        }
         [HttpPut]
-        public IActionResult Put(SkillViewModel skillVM)
+        public IActionResult Put(ServiceViewModel serviceVM)
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest("Invalid Data");
+                return BadRequest("Data Not Valid");
             }
 
             try
             {
-                if (skillVM == null)
+                if (serviceVM == null)
                 {
                     return BadRequest("Data cannot null");
                 }
 
-                var id = _skillService.GetById(skillVM.IdSkill);
+                var id = _servicesService.GetById(serviceVM.IdService);
+
                 if (id == null)
                 {
                     return NotFound("Id not found !");
                 }
                 else
                 {
-                    var data = _skillService.UpdateSkill(skillVM);
-
+                    var data = _servicesService.UpdateService(serviceVM);
                     return Ok(data);
                 }
-
             }
             catch (Exception ex)
             {
                 return BadRequest(ex);
             }
         }
-
         [HttpDelete]
         public IActionResult Delete(int id)
         {
@@ -129,15 +120,14 @@ namespace agungdev.Controllers.API
 
             try
             {
-                var idSkill = _skillService.GetById(id);
-
-                if (idSkill == null)
+                var idservice = _servicesService.GetById(id);
+                if (idservice == null)
                 {
                     return NotFound("Id not found !");
                 }
                 else
                 {
-                    var data = _skillService.DeleteSkill(id);
+                    var data = _servicesService.DeleteService(id);
 
                     return Ok("Success Delete Data : " + id);
                 }
@@ -147,5 +137,6 @@ namespace agungdev.Controllers.API
                 return BadRequest(ex);
             }
         }
+
     }
 }

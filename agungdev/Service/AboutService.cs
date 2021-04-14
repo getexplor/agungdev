@@ -11,17 +11,18 @@ namespace agungdev.Service
     public class AboutService : IAboutService
     {
         private readonly AgungDevContext _context = new AgungDevContext();
-        IList<About> abt = null;
+        List<AboutViewModel> ListAboutVM = new List<AboutViewModel>();
+        AboutViewModel aboutVM = null;
         public AboutService(AgungDevContext context)
         {
             this._context = context;
         }
 
-        public IEnumerable<About> GetAbout()
+        public IEnumerable<AboutViewModel> GetAbout()
         {
             try
             {
-                abt = _context.Abouts.Select(x => new About()
+                ListAboutVM = _context.Abouts.Select(x => new AboutViewModel()
                 {
                     IdAbout = x.IdAbout,
                     AboutMe = x.AboutMe,
@@ -31,8 +32,8 @@ namespace agungdev.Service
                     Age = x.Age,
                     Birthday = x.Birthday,
                     Degree = x.Degree
-                }).ToList<About>();
-                return abt;
+                }).ToList<AboutViewModel>();
+                return ListAboutVM;
             }
             catch (Exception ex)
             {
@@ -41,27 +42,37 @@ namespace agungdev.Service
             
         }
 
-        public About GetById(int id)
+        public AboutViewModel GetById(int id)
         {
-            return _context.Abouts.Where(x => x.IdAbout == id).FirstOrDefault();
+            aboutVM = _context.Abouts.Where(x => x.IdAbout == id).Select(x => new AboutViewModel()
+            {
+                IdAbout = x.IdAbout,
+                AboutMe = x.AboutMe,
+                Age = x.Age,
+                Birthday = x.Birthday,
+                City = x.City,
+                Country = x.Country,
+                CurrentPosition = x.CurrentPosition,
+                Degree = x.Degree
+            }).FirstOrDefault<AboutViewModel>();
+            return aboutVM;
         }
 
-        public About Update(About about)
+        public AboutViewModel Update(AboutViewModel aboutVM)
         {
-            var data = _context.Abouts.Where(x => x.IdAbout == about.IdAbout).FirstOrDefault();
+            var data = _context.Abouts.Where(x => x.IdAbout == aboutVM.IdAbout).FirstOrDefault();
             if (data != null)
             {
-                data.AboutMe = about.AboutMe;
-                data.Age = about.Age;
-                data.City = about.City;
-                data.Country = about.Country;
-                data.Degree = about.Degree;
-                data.CurrentPosition = about.CurrentPosition;
-                data.Birthday = about.Birthday;
+                data.AboutMe = aboutVM.AboutMe;
+                data.Age = aboutVM.Age;
+                data.City = aboutVM.City;
+                data.Country = aboutVM.Country;
+                data.Degree = aboutVM.Degree;
+                data.CurrentPosition = aboutVM.CurrentPosition;
+                data.Birthday = aboutVM.Birthday;
 
                 _context.SaveChanges();
 
-                return data;
             }
             return null;
         }
@@ -69,9 +80,9 @@ namespace agungdev.Service
 
     public interface IAboutService
     {
-        IEnumerable<About> GetAbout();
-        About GetById(int id);
-        About Update(About about);
+        IEnumerable<AboutViewModel> GetAbout();
+        AboutViewModel GetById(int id);
+        AboutViewModel Update(AboutViewModel aboutVM);
     }
 
 }

@@ -9,6 +9,7 @@ namespace agungdev.Service
     public class ContactService : IContactService
     {
         private readonly AgungDevContext _context;
+        ContactViewModel contactVM = null;
 
         public ContactService(AgungDevContext context)
         {
@@ -16,21 +17,21 @@ namespace agungdev.Service
         }
 
 
-        public Contact GetById(int id)
+        public ContactViewModel GetById(int id)
         {
-            if (id <= 0)
+            contactVM = _context.Contacts.Where(x => x.IdContact == id).Select(x => new ContactViewModel()
             {
-                return null;
-            }
-
-            try
-            {
-                return _context.Contacts.Where(x => x.IdContact == id).FirstOrDefault();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+                IdContact = x.IdContact,
+                Address = x.Address,
+                Email = x.Email,
+                Facebook = x.Facebook,
+                Github = x.Github,
+                Instagram = x.Instagram,
+                Linkedin = x.Linkedin,
+                Phone = x.Phone,
+                Twitter = x.Twitter
+            }).FirstOrDefault<ContactViewModel>();
+            return contactVM;
         }
 
         public IEnumerable<Contact> GetContact()
@@ -38,42 +39,44 @@ namespace agungdev.Service
             throw new NotImplementedException();
         }
 
-        public Contact UpdateContact(Contact contact)
+        public ContactViewModel UpdateContact(ContactViewModel contactVM)
         {
-            var data = _context.Contacts.Where(x => x.IdContact == contact.IdContact).FirstOrDefault();
-
-            if (data != null)
-            {
-                data.Address = contact.Address;
-                data.Phone = contact.Phone;
-                data.Email = contact.Email;
-
-                _context.SaveChanges();
-
-                return data;
-            }
-            return null;
-        }
-        public Contact UpdateSocialMedia(Contact contact)
-        {
-            if (contact == null)
-            {
-                return null;
-            }
-
             try
             {
-                var data = _context.Contacts.Where(x => x.IdContact == contact.IdContact).FirstOrDefault();
+                var data = _context.Contacts.Where(x => x.IdContact == contactVM.IdContact).FirstOrDefault();
 
-                data.Linkedin = contact.Linkedin;
-                data.Instagram = contact.Instagram;
-                data.Twitter = contact.Twitter;
-                data.Facebook = contact.Facebook;
-                data.Github = contact.Github;
+                if (data != null)
+                {
+                    data.Address = contactVM.Address;
+                    data.Phone = contactVM.Phone;
+                    data.Email = contactVM.Email;
 
-                _context.SaveChanges();
+                    _context.SaveChanges();
 
-                return data;
+                }
+                return null;
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public ContactViewModel UpdateSocialMedia(ContactViewModel contactVM)
+        {
+            try
+            {
+                var data = _context.Contacts.Where(x => x.IdContact == contactVM.IdContact).FirstOrDefault();
+                if (data != null)
+                {
+                    data.Linkedin = contactVM.Linkedin;
+                    data.Instagram = contactVM.Instagram;
+                    data.Twitter = contactVM.Twitter;
+                    data.Facebook = contactVM.Facebook;
+                    data.Github = contactVM.Github;
+
+                    _context.SaveChanges();
+                }
+                return null;
             }
             catch (Exception ex)
             {
@@ -84,8 +87,8 @@ namespace agungdev.Service
     public interface IContactService
     {
         IEnumerable<Contact> GetContact();
-         Contact GetById(int id);
-        Contact UpdateContact(Contact contact);
-        Contact UpdateSocialMedia(Contact contact);
+        ContactViewModel GetById(int id);
+        ContactViewModel UpdateContact(ContactViewModel contactVM);
+        ContactViewModel UpdateSocialMedia(ContactViewModel contactVM);
     }
 }

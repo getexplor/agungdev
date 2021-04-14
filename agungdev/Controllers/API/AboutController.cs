@@ -56,7 +56,7 @@ namespace agungdev.Controllers.API
         }
 
         [HttpPut]
-        public IActionResult Put(About about)
+        public IActionResult Put(AboutViewModel aboutVM)
         {
             if (!ModelState.IsValid)
             {
@@ -65,11 +65,11 @@ namespace agungdev.Controllers.API
 
             try
             {
-                if (about == null)
+                if (aboutVM == null)
                 {
                     return BadRequest("Data cannot null");
                 }
-                var data = _aboutService.Update(about);
+                var data = _aboutService.Update(aboutVM);
 
                 return Ok(data);
             }

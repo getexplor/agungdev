@@ -34,7 +34,7 @@ namespace agungdev.Controllers.API
 
                 if (data == null)
                 {
-                    return NotFound(data);
+                    return NotFound("Id not found !");
                 }
 
                 return Ok(data);
@@ -46,7 +46,7 @@ namespace agungdev.Controllers.API
         }
 
         [HttpPut]
-        public IActionResult Put(Contact contact)
+        public IActionResult Put(ContactViewModel contactVM)
         {
             if (!ModelState.IsValid)
             {
@@ -55,14 +55,22 @@ namespace agungdev.Controllers.API
 
             try
             {
-                if (contact == null)
+                if (contactVM == null)
                 {
                     return BadRequest("Data cannot be null");
                 }
 
-                var data = _contactService.UpdateContact(contact);
+                var id = _contactService.GetById(contactVM.IdContact);
+                if (id == null)
+                {
+                    return NotFound("Id not found !");
+                }
+                else
+                {
+                    var data = _contactService.UpdateContact(contactVM);
 
-                return Ok(data);
+                    return Ok(data);
+                }
 
             }
             catch (Exception ex)
@@ -73,7 +81,7 @@ namespace agungdev.Controllers.API
 
         //[Route("api/contact/")]
         [HttpPut("socialmedia")]
-        public IActionResult PutSocial(Contact contact)
+        public IActionResult PutSocial(ContactViewModel contactVM)
         {
             if (!ModelState.IsValid)
             {
@@ -82,14 +90,22 @@ namespace agungdev.Controllers.API
 
             try
             {
-                if (contact == null)
+                if (contactVM == null)
                 {
                     return BadRequest("Data cannot be null");
                 }
 
-                var data = _contactService.UpdateSocialMedia(contact);
+                var id = _contactService.GetById(contactVM.IdContact);
+                if (id == null)
+                {
+                    return NotFound("Id not found !");
+                }
+                else
+                {
+                    var data = _contactService.UpdateSocialMedia(contactVM);
 
-                return Ok(data);
+                    return Ok(data);
+                }
 
             }
             catch (Exception ex)

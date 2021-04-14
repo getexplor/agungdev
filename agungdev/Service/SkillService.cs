@@ -10,31 +10,39 @@ namespace agungdev.Service
     public class SkillService : ISkillService
     {
         private readonly AgungDevContext _context = new AgungDevContext();
-        IList<Skill> skill = null;
+        List<SkillViewModel> ListSkillVM = new List<SkillViewModel>();
+        SkillViewModel SkillVM = null;
 
         public SkillService(AgungDevContext context)
         {
            this._context = context;
         }
 
-        public Skill GetById(int id)
+        public SkillViewModel GetById(int id)
         {
-            return _context.Skills.Where(x => x.IdSkill == id).FirstOrDefault();
+            SkillVM = _context.Skills.Where(x => x.IdSkill == id).Select(x => new SkillViewModel()
+            {
+                IdSkill = x.IdSkill,
+                SkillName = x.SkillName,
+                SkillValue = x.SkillValue
+            }).FirstOrDefault<SkillViewModel>();
+
+            return SkillVM;
         }
 
-        public IEnumerable<Skill> GetSkill()
+        public IEnumerable<SkillViewModel> GetSkill()
         {
             try
             {
-                skill = _context.Skills.Select(x => new Skill()
+                ListSkillVM = _context.Skills.Select(x => new SkillViewModel()
                 {
                     IdSkill = x.IdSkill,
                     SkillName = x.SkillName,
                     SkillValue = x.SkillValue
 
-                }).ToList<Skill>();
+                }).ToList<SkillViewModel>();
 
-                return skill;
+                return ListSkillVM;
             }
             catch (Exception ex)
             {
@@ -42,37 +50,43 @@ namespace agungdev.Service
             }
         }
 
-        public Skill UpdateSkill(Skill skill)
+        public SkillViewModel UpdateSkill(SkillViewModel skillVM)
         {
-            var data = _context.Skills.Where(x => x.IdSkill == skill.IdSkill).FirstOrDefault();
+            var data = _context.Skills.Where(x => x.IdSkill == skillVM.IdSkill).FirstOrDefault();
 
             if (data != null)
             {
-                data.SkillName = skill.SkillName;
-                data.SkillValue = skill.SkillValue;
+                data.SkillName = skillVM.SkillName;
+                data.SkillValue = skillVM.SkillValue;
 
                 _context.SaveChanges();
-
-                return data;
-
             }
             return null;
         }
 
-        public Skill AddSkill(Skill skill)
+        public SkillViewModel AddSkill(SkillViewModel skillVM)
         {
             try
             {
-               var data = _context.Add(new Skill()
-               {
-                   IdSkill = skill.IdSkill,
-                   SkillName = skill.SkillName,
-                   SkillValue = skill.SkillValue
-               });
+                var DuplicateSkill = _context.Skills.Where(x => x.SkillName == skillVM.SkillName).FirstOrDefault();
 
-                _context.SaveChanges();
+                if (DuplicateSkill != null)
+                {
+                    throw new ArgumentException("Duplicate Skill");
+                }
+                else
+                {
+                    var data = _context.Add(new Skill()
+                    {
+                        IdSkill = skillVM.IdSkill,
+                        SkillName = skillVM.SkillName,
+                        SkillValue = skillVM.SkillValue
+                    });
 
-                return skill;
+                    _context.SaveChanges();
+
+                    return skillVM;
+                }
 
             }
             catch (Exception ex)
@@ -81,7 +95,7 @@ namespace agungdev.Service
             }
         }
 
-        public Skill DeleteSkill(int id)
+        public SkillViewModel DeleteSkill(int id)
         {
             var data = _context.Skills.Where(x => x.IdSkill == id).FirstOrDefault();
 
@@ -89,8 +103,6 @@ namespace agungdev.Service
             {
                 _context.Skills.Remove(data);
                 _context.SaveChanges();
-
-                return data;
             }
 
             return null;
@@ -100,10 +112,10 @@ namespace agungdev.Service
 
     public interface ISkillService
     {
-        IEnumerable<Skill> GetSkill();
-        Skill GetById(int id);
-        Skill UpdateSkill(Skill skill);
-        Skill AddSkill(Skill skill);
-        Skill DeleteSkill(int id);
+        IEnumerable<SkillViewModel> GetSkill();
+        SkillViewModel GetById(int id);
+        SkillViewModel UpdateSkill(SkillViewModel skillVM);
+        SkillViewModel AddSkill(SkillViewModel skillVM);
+        SkillViewModel DeleteSkill(int id);
     }
 }

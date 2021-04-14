@@ -59,7 +59,7 @@ namespace agungdev.Controllers.API
             
         }
         [HttpPost]
-        public IActionResult Post(Portfolio portfolio)
+        public IActionResult Post(PortfolioViewModel portfolioVM)
         {
             if (!ModelState.IsValid)
             {
@@ -68,12 +68,12 @@ namespace agungdev.Controllers.API
 
             try
             {
-                if (portfolio == null)
+                if (portfolioVM == null)
                 {
                     return BadRequest("Data cannot null");
                 }
 
-                var data = _portfolioService.PostPortfolio(portfolio);
+                var data = _portfolioService.PostPortfolio(portfolioVM);
 
                 return Ok(data);
             }
@@ -85,17 +85,25 @@ namespace agungdev.Controllers.API
             
         }
         [HttpPut]
-        public IActionResult Put(Portfolio portfolio)
+        public IActionResult Put(PortfolioViewModel portfolioVM)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest("invalid data");
             }
+
             try
             {
-                var data = _portfolioService.PutPortfolio(portfolio);
-
-                return Ok(data);
+                var id = _portfolioService.GetPortfoById(portfolioVM.IdPortfolio);
+                if (id == null)
+                {
+                    return NotFound("Id not found !");
+                }
+                else
+                {
+                    var data = _portfolioService.PutPortfolio(portfolioVM);
+                    return Ok(data);
+                }
             } catch (Exception ex)
             {
                 return BadRequest(ex);
@@ -112,9 +120,17 @@ namespace agungdev.Controllers.API
 
             try
             {
-                var data = _portfolioService.DeletePortfolio(id);
+                var idPortfo = _portfolioService.GetPortfoById(id);
 
-                return Ok("Success Delete Data : " + id);
+                if (idPortfo == null)
+                {
+                    return NotFound("Id not found !");
+                }
+                else
+                {
+                    var data = _portfolioService.DeletePortfolio(id);
+                    return Ok("Success Delete Data : " + id);
+                }
             }
             catch (Exception ex)
             {

@@ -9,32 +9,40 @@ namespace agungdev.Service
     public class PortfolioService : IPortfolioService
     {
         private readonly AgungDevContext _context = new AgungDevContext();
-        IList<Portfolio> portfolios;
+        IList<PortfolioViewModel> ListPortfoliosVM;
+        PortfolioViewModel portfolioVM = null;
         public PortfolioService(AgungDevContext context)
         {
             _context = context;
         }
         
-        public Portfolio GetPortfoById(int id)
+        public PortfolioViewModel GetPortfoById(int id)
         {
-            var data = _context.Portfolios.Where(x => x.IdPortfolio == id).FirstOrDefault();
-            return data;
+            portfolioVM = _context.Portfolios.Where(x => x.IdPortfolio == id).Select(x => new PortfolioViewModel()
+            {
+                IdPortfolio = x.IdPortfolio,
+                IdCategory = x.IdCategory,
+                ImageTitle = x.ImageTitle,
+                ImagePath = x.ImagePath,
+                PortfoName = x.PortfoName
+            }).FirstOrDefault<PortfolioViewModel>();
+            return portfolioVM;
         }
 
-        public IEnumerable<Portfolio> GetPortfolio()
+        public IEnumerable<PortfolioViewModel> GetPortfolio()
         {
             try
             {
-                portfolios = _context.Portfolios.Select(x => new Portfolio()
+                ListPortfoliosVM = _context.Portfolios.Select(x => new PortfolioViewModel()
                 {
                     IdPortfolio = x.IdPortfolio,
                     IdCategory = x.IdCategory,
                     PortfoName = x.PortfoName,
                     ImagePath = x.ImagePath,
                     ImageTitle = x.ImageTitle
-                }).ToList<Portfolio>();
+                }).ToList<PortfolioViewModel>();
 
-                return portfolios;
+                return ListPortfoliosVM;
             }
             catch (Exception ex)
             {
@@ -42,46 +50,62 @@ namespace agungdev.Service
             }
         }
 
-        public Portfolio PostPortfolio(Portfolio portfolio)
+        public PortfolioViewModel PostPortfolio(PortfolioViewModel portfolioVM)
         {
-            try
+            var DuplicatePorfo = _context.Portfolios.Where(x => x.PortfoName == portfolioVM.PortfoName).FirstOrDefault();
+
+            if (DuplicatePorfo != null)
             {
-                var data = _context.Portfolios.Add(new Portfolio()
+                throw new ArgumentException("Duplicate Portfolio");
+            }
+            else
+            {
+                try
                 {
-                    PortfoName = portfolio.PortfoName,
-                    IdCategory = portfolio.IdCategory,
-                    ImageByte = portfolio.ImageByte,
-                    ImagePath = portfolio.ImagePath,
-                    ImageTitle = portfolio.ImageTitle
-                });
+                    _context.Portfolios.Add(new Portfolio()
+                    {
+                        PortfoName = portfolioVM.PortfoName,
+                        IdCategory = portfolioVM.IdCategory,
+                        ImageByte = portfolioVM.ImageByte,
+                        ImagePath = portfolioVM.ImagePath,
+                        ImageTitle = portfolioVM.ImageTitle
+                    });
 
-                _context.SaveChanges();
+                    _context.SaveChanges();
 
-                return portfolio;
+                    return portfolioVM;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
             }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            
         }
 
-        public Portfolio PutPortfolio(Portfolio portfolio)
+        public PortfolioViewModel PutPortfolio(PortfolioViewModel portfolioVM)
         {
-            var data = _context.Portfolios.Where(x => x.IdPortfolio == portfolio.IdPortfolio).FirstOrDefault();
+            var data = _context.Portfolios.Where(x => x.IdPortfolio == portfolioVM.IdPortfolio).FirstOrDefault();
+            var DuplicatePorfo = _context.Portfolios.Where(x => x.PortfoName == portfolioVM.PortfoName).FirstOrDefault();
 
-            if (data != null)
+            if (DuplicatePorfo != null)
             {
-                data.PortfoName = portfolio.PortfoName;
-                data.IdCategory = portfolio.IdCategory;
-                
-                _context.SaveChanges();
+                throw new ArgumentException("Duplicate Portfolio");
+            }
+            else
+            {
+                if (data != null)
+                {
+                    data.PortfoName = portfolioVM.PortfoName;
+                    data.IdCategory = portfolioVM.IdCategory;
 
-                return data;
+                    _context.SaveChanges();
+                }
             }
             return null;
         }
 
-        public Portfolio DeletePortfolio(int id)
+        public PortfolioViewModel DeletePortfolio(int id)
         {
             var data = _context.Portfolios.Where(x => x.IdPortfolio == id).FirstOrDefault();
 
@@ -90,7 +114,6 @@ namespace agungdev.Service
                 _context.Portfolios.Remove(data);
                 _context.SaveChanges();
 
-                return data;
             }
             return null;
         }
@@ -98,10 +121,10 @@ namespace agungdev.Service
 
     public interface IPortfolioService
     {
-        IEnumerable<Portfolio> GetPortfolio();
-        Portfolio GetPortfoById(int id);
-        Portfolio PostPortfolio(Portfolio portfolio);
-        Portfolio PutPortfolio(Portfolio portfolio);
-        Portfolio DeletePortfolio(int id);
+        IEnumerable<PortfolioViewModel> GetPortfolio();
+        PortfolioViewModel GetPortfoById(int id);
+        PortfolioViewModel PostPortfolio(PortfolioViewModel portfolioVM);
+        PortfolioViewModel PutPortfolio(PortfolioViewModel portfolioVM);
+        PortfolioViewModel DeletePortfolio(int id);
     }
 }

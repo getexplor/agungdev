@@ -101,3 +101,4 @@ D:\Web\ASP.NET\agungdev\agungdev\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Js
 D:\Web\ASP.NET\agungdev\agungdev\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 D:\Web\ASP.NET\agungdev\agungdev\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Bson.dll
 D:\Web\ASP.NET\agungdev\agungdev\obj\Debug\netcoreapp3.1\agungdev.csprojAssemblyReference.cache
+D:\Web\ASP.NET\agungdev\agungdev\obj\Debug\netcoreapp3.1\Razor\Views\Service\Index.cshtml.g.cs

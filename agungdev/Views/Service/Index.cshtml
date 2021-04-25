@@ -1,3 +1,21 @@
 ﻿@{
+    ViewData["Title"] = "Service";
     ViewData["ServiceActive"] = "bg-success";
 }
+
+<!-- START BREADCRUMB -->
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/Home">Home</a></li>
+    <li class="breadcrumb-item active">Service</li>
+</ol>
+<!-- END BREADCRUMB -->
+<div class="card card-transparent m-0">
+    <div class="card-block p-b-0 p-t-0">
+        <partial name="Service_Add" />
+    </div>
+</div>
+<div class="card card-transparent">
+    <div class="card-block">
+        <partial name="Service_Data" />
+    </div>
+</div>
